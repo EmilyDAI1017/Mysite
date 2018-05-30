@@ -1,62 +1,15 @@
-{% load static from staticfiles %}
-<!DOCTYPE html>
-
-<html>
-
-  <head>
-    <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta charset="utf-8">
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #floating-panel {
-        position: absolute;
-        top: 10px;
-        left: 25%;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-        text-align: center;
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-    </style>
-    <link rel="stylesheet" href="{% static 'map/css/styles.css' %}">
-  </head>
-
-  <body>
-    <div id="map"></div>
-    <div id="floating-panel">
-      <input onclick="clearMarkers();" type=button value="Hide Markers">
-      <input onclick="showMarkers();" type=button value="Show All Markers">
-      <input onclick="deleteMarkers();" type=button value="Delete Markers">
-    </div>
-    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-    <input id = 'addmarker' class = 'controls' type="submit" onclick="addmarker()" value="Add a draggable marker">
-
-    <script>
-      var markers = [];
       var map;
+      var markers = [];
+
 
       function initMap() {
           map = new google.maps.Map(document.getElementById('map'), {
           zoom: 8,
           center: {lat: -36.852338, lng: 174.769107},
           mapTypeId: 'roadmap'
+
         });
       }
-
 
       // This example adds a search box to a map, using the Google Place Autocomplete
       // feature. People can enter geographical searches. The search box will return a
@@ -67,10 +20,6 @@
       // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
       function initAutocomplete() {
         initMap();
-        //add markers!!
-
-
-
         // Create the search box and link it to the UI element.
         var input = document.getElementById('pac-input');
         var searchBox = new google.maps.places.SearchBox(input);
@@ -134,17 +83,16 @@
 
 
 
-      function addmarker() {
-      var marker = new google.maps.Marker({
-        position: map.getCenter(),
-        title: 'new marker',
-        draggable: true,
-        map: map
-
-
-       });
-      markers.push(marker);
-      var contentString = '<div id="content">'+
+      // Sets the map on all markers in the array.
+         function addmarker(latilongi) {
+             var marker = new google.maps.Marker({
+             position: map.getCenter(),
+             title: 'new marker',
+             draggable: true,
+             map: map
+           });
+         markers.push(marker);
+         var contentString = '<div id="content">'+
             '<div id="siteNotice">'+
             '</div>'+
             '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
@@ -172,14 +120,11 @@
           infowindow.open(map, marker);
         });
 
-
       }
 
 
 
 
-
-      // Sets the map on all markers in the array.
       function setMapOnAll(map) {
         for (var i = 0; i < markers.length; i++) {
           markers[i].setMap(map);
@@ -201,13 +146,3 @@
         clearMarkers();
         markers = [];
       }
-
-
-    </script>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3-soOxJeUjIbcCUQHHaAeaYHKmL-zel0&callback=initMap&libraries=places&callback=initAutocomplete"
-    async defer></script>
-  </body>
-</html>
-
-
