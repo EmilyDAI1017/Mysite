@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'amap',
     'accounts',
-    'rest_framework',
+    'maps.apps.MapsConfig',
+
 
 
 ]
@@ -78,9 +78,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+
     os.path.join(PROJECT_ROOT, 'templates').replace('\\','/'),
 )
 
@@ -88,7 +86,7 @@ TEMPLATE_DIRS = (
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.amap.Loader',
-#     'django.template.loaders.eggs.Loader',
+#   'django.template.loaders.eggs.Loader',
 )
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -99,6 +97,7 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
 
 
 # Password validation
@@ -147,3 +146,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+

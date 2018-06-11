@@ -7,6 +7,13 @@
 <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
+    {% for line in message %}
+                    <tr>
+                        <td>{{ line.username }}</td>
+                        <td>{{ line.password }}</td>
+                    </tr>
+  {% endfor %}
   <button type="submit">Login</button>
 </form>
+<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
 {% endblock %}
