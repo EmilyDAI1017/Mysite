@@ -1,7 +1,6 @@
       var map;
       var markers = [];
 
-
       function initMap() {
           map = new google.maps.Map(document.getElementById('map'), {
           zoom: 8,
@@ -83,45 +82,74 @@
 
 
 
-      // Sets the map on all markers in the array.
-         function addmarker(latilongi) {
+
+      // Add a draggable marker.
+      function addmarker() {
+          var geocoder = new google.maps.Geocoder();
+          var infowindow = new google.maps.InfoWindow();
+          var myLatLng =  map.getCenter();
              var marker = new google.maps.Marker({
-             position: map.getCenter(),
+             position: myLatLng,
              title: 'new marker',
              draggable: true,
              map: map
            });
-         markers.push(marker);
-         var contentString = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
-            '<div id="bodyContent">'+
-            '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-            'sandstone rock formation in the southern part of the '+
-            'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
-            'south west of the nearest large town, Alice Springs; 450&#160;km '+
-            '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
-            'features of the Uluru - Kata Tjuta National Park. Uluru is '+
-            'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
-            'Aboriginal people of the area. It has many springs, waterholes, '+
-            'rock caves and ancient paintings. Uluru is listed as a World '+
-            'Heritage Site.</p>'+
-            '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-            'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
-            '(last visited June 22, 2009).</p>'+
-            '</div>'+
-            '</div>';
-      var infowindow = new google.maps.InfoWindow({
-        content:  contentString
+           markers.push(marker);
 
-    });
-      marker.addListener('click', function() {
-          infowindow.open(map, marker);
-        });
+           geocoder.geocode({'latLng': myLatLng }, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+
+                        if (results[0]) {
+                            $('#latitude,#longitude').show();
+                            $('#address').val(results[0].formatted_address);
+                            $('#latitude').val(marker.getPosition().lat());
+                            $('#longitude').val(marker.getPosition().lng());
+                            var html = "<table>" +
+                 "<tr><td>Name:</td> <td><input type='text' id='name'/> </td> </tr>" +
+                 "<tr><td>Address:</td> <td>"+results[0].formatted_address+"</td> </tr>"+
+                 "<tr><td>Description:</td> <td><input type='text' id='description'/></td> </tr>" +
+                 "<tr><td>Type:</td> <td><select id='type'>" +
+                 "<option value='museum'>museum</option>" +
+                 "<option value='school' SELECTED>school</option>" +
+                 "<option value='restaurant'>restaurant</option>" +"<option value='others'>others</option>" +
+                 "</select> </td></tr>" +
+                 "<tr><td></td><td><input type='button' value='Save & Close' onclick='saveData()'/></td></tr>";
+                            infowindow.setContent(html);
+                            google.maps.event.addListener(marker, 'click', function() {
+                                    infowindow.open(map,marker);
+
+                                                         });
+                        }
+
+                        }
+
+                });
+
+
+                google.maps.event.addListener(marker, 'dragend', function() {
+
+                geocoder.geocode({'latLng': marker.getPosition()}, function(results,status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        if (results[0]) {
+                            $('#latitude,#longitude').show();
+                            $('#address').val(results[0].formatted_address);
+                            $('#latitude').val(marker.getPosition().lat());
+                            $('#longitude').val(marker.getPosition().lng());
+
+                            var html = $('.infowindow')[0].outerHTML;
+                            infowindow.setContent(html);
+                            google.maps.event.addListener(marker, 'click', function() {
+                                    infowindow.open(map,marker);
+                                            });
+                        }
+                    }
+                });
+            });
+
 
       }
 
+      google.maps.event.addDomListener(window, 'load', initialize);
 
 
 
@@ -146,3 +174,18 @@
         clearMarkers();
         markers = [];
       }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
