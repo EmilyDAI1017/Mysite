@@ -102,3 +102,7 @@ html, body {
         font-family: 'Roboto','sans-serif';
         line-height: 30px;
         }
+
+.hidden {
+  display: none;
+}

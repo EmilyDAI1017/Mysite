@@ -7,10 +7,8 @@
 {% load staticfiles %}
 {% block content %}
 {% if user.is_authenticated %}
-
-
   Hi {{ user.username }}!
-  <p style = 'position: sticky;'><a href="{% url 'logout' %}">logout</a></p>
+  <p><a href="{% url 'logout' %}">logout</a></p>
 {% else %}
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">Sign in</a>
@@ -31,8 +29,7 @@ or
   <body>
 
     <div id="floating-panel">
-
-      <input type="button" onclick="addmarker()" value="Add a draggable marker">
+        <input type="button" onclick="addmarker()" value="Add a draggable marker">
       <input onclick="clearMarkers();" type=button value="Hide Markers">
       <input onclick="showMarkers();" type=button value="Show All Markers">
       <input onclick="deleteMarkers();" type=button value="Delete Markers">
@@ -49,13 +46,14 @@ Latitude:<input type="text" id="latitude" placeholder="Latitude" class="field le
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3-soOxJeUjIbcCUQHHaAeaYHKmL-zel0&callback=initMap&libraries=places&callback=initAutocomplete"
     async defer></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  </body>
-</html>
     <form class= 'infowindow' method="post">
     {% csrf_token %}
     {{ mks }}
-    <button type="submit">Submit!</button>
-  </form>
+    <button type="submit">Save!</button>
+    </form>
+  </body>
+</html>
+
 
 {% endblock %}
 
