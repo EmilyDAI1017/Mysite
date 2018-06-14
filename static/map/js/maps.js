@@ -92,7 +92,8 @@
              position: myLatLng,
              title: 'new marker',
              draggable: true,
-             map: map
+             map: map,
+             url:'/index',
            });
            markers.push(marker);
 
@@ -104,16 +105,7 @@
                             $('#address').val(results[0].formatted_address);
                             $('#latitude').val(marker.getPosition().lat());
                             $('#longitude').val(marker.getPosition().lng());
-                            var html = "<table>" +
-                 "<tr><td>Name:</td> <td><input type='text' id='name'/> </td> </tr>" +
-                 "<tr><td>Address:</td> <td>"+results[0].formatted_address+"</td> </tr>"+
-                 "<tr><td>Description:</td> <td><input type='text' id='description'/></td> </tr>" +
-                 "<tr><td>Type:</td> <td><select id='type'>" +
-                 "<option value='museum'>museum</option>" +
-                 "<option value='school' SELECTED>school</option>" +
-                 "<option value='restaurant'>restaurant</option>" +"<option value='others'>others</option>" +
-                 "</select> </td></tr>" +
-                 "<tr><td></td><td><input type='button' value='Save & Close' onclick='saveData()'/></td></tr>";
+                            var html = $('.infowindow')[0].outerHTML;
                             infowindow.setContent(html);
                             google.maps.event.addListener(marker, 'click', function() {
                                     infowindow.open(map,marker);
@@ -140,6 +132,7 @@
                             infowindow.setContent(html);
                             google.maps.event.addListener(marker, 'click', function() {
                                     infowindow.open(map,marker);
+
                                             });
                         }
                     }
