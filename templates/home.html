@@ -27,7 +27,11 @@ or
     <link rel="stylesheet" href="{% static 'map/css/styles.css' %}">
   </head>
   <body>
-
+    </br>Save markers manually:</br>
+    <form class= 'infowindow' method="post">
+    {% csrf_token %}
+    {{ mks }}
+    <button type="submit">Save!</button></form>
     <div id="floating-panel">
         <input type="button" onclick="addmarker()" value="Add a draggable marker">
       <input onclick="clearMarkers();" type=button value="Hide Markers">
@@ -36,7 +40,7 @@ or
     </div>
 <div id="map" style="height:600px;width:auto"></div>
 The marker's address:<br/>
-<input id="address" type="text" style="width:600px;" class="field left" readonly/><br/>
+      <input id="address" type="text" style="width:600px;" class="field left" readonly/><br/>
 Latitude:<input type="text" id="latitude" placeholder="Latitude" class="field left" readonly/>
     Longitude:<input type="text" id="longitude" placeholder="Longitude" class="field left" readonly/>
 
@@ -46,11 +50,8 @@ Latitude:<input type="text" id="latitude" placeholder="Latitude" class="field le
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3-soOxJeUjIbcCUQHHaAeaYHKmL-zel0&callback=initMap&libraries=places&callback=initAutocomplete"
     async defer></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <form class= 'infowindow' method="post">
-    {% csrf_token %}
-    {{ mks }}
-    <button type="submit">Save!</button>
-    </form>
+
+
   </body>
 </html>
 

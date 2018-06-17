@@ -82,7 +82,6 @@
 
 
 
-
       // Add a draggable marker.
       function addmarker() {
           var geocoder = new google.maps.Geocoder();
@@ -99,7 +98,6 @@
 
            geocoder.geocode({'latLng': myLatLng }, function(results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
-
                         if (results[0]) {
                             $('#latitude,#longitude').show();
                             $('#address').val(results[0].formatted_address);
