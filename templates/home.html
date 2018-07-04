@@ -8,7 +8,10 @@
 {% block content %}
 {% if user.is_authenticated %}
   Hi {{ user.username }}!
+
+
   <p><a href="{% url 'logout' %}">logout</a></p>
+
 {% else %}
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">Sign in</a>
@@ -26,14 +29,30 @@ or
     <meta charset="utf-8">
     <link rel="stylesheet" href="{% static 'map/css/styles.css' %}">
   </head>
+
   <body>
+<script src="{% static 'map/js/maps.js' %}"></script>
+
+  <div id="showmarkers" style="display:none;">
+    {% for mk in markers %}
+  <script type ='text/javascript'>
+  window.onload = findMarkers("{{ mk.lat }}", "{{ mk.lng }}");
+   </script>
+    {% endfor %}
+  </div>
+  <input type="button" name="showmarkers" value="Show all my markers" onclick="load()" />
+  <script>function showDiv() {
+   document.getElementById('showmarkers').style.display = "block";}
+  </script>
+
+
     </br>Save markers manually:</br>
     <form class= 'infowindow' method="post">
     {% csrf_token %}
     {{ mks }}
     <button type="submit">Save!</button></form>
     <div id="floating-panel">
-        <input type="button" onclick="addmarker()" value="Add a draggable marker">
+        <input type="button" onclick="addmarker();" value="Add a draggable marker">
       <input onclick="clearMarkers();" type=button value="Hide Markers">
       <input onclick="showMarkers();" type=button value="Show All Markers">
       <input onclick="deleteMarkers();" type=button value="Delete Markers">
@@ -46,7 +65,14 @@ Latitude:<input type="text" id="latitude" placeholder="Latitude" class="field le
 
 <input id="pac-input" class="controls" type="text" placeholder="Search Box">
 
-   <script src="{% static 'map/js/maps.js' %}"></script>
+
+
+
+
+
+
+
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3-soOxJeUjIbcCUQHHaAeaYHKmL-zel0&callback=initMap&libraries=places&callback=initAutocomplete"
     async defer></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

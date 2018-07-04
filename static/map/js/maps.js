@@ -92,7 +92,6 @@
              title: 'new marker',
              draggable: true,
              map: map,
-             url:'/index',
            });
            markers.push(marker);
 
@@ -138,11 +137,17 @@
             });
 
 
+
       }
 
-      google.maps.event.addDomListener(window, 'load', initialize);
-
-
+      function findMarkers(lat,lng){
+         var myLatLng = new google.maps.LatLng(lat,lng);
+         var marker = new google.maps.Marker({
+             position: myLatLng,
+             map: map,
+           });
+         markers.push(marker);
+           }
 
       function setMapOnAll(map) {
         for (var i = 0; i < markers.length; i++) {
@@ -165,6 +170,7 @@
         clearMarkers();
         markers = [];
       }
+
 
 
 
